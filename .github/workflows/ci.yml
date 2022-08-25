@@ -1,0 +1,41 @@
+#不使用docker镜像仓库
+name: everydayMessageServerBoot
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    name: Running Java
+    steps:
+      - uses: actions/checkout@master
+      - name: Set up JDK 8
+        uses: actions/setup-java@master
+        with:
+          java-version: '8'
+          distribution: 'adopt'
+          cache: maven
+      - name: Build with Maven
+        run: mvn clean package --file pom.xml
+      - name: 将 JAR 包部署到服务器
+        uses: garygrossgarten/github-action-scp@release
+        with:
+          local: target/everydayMessageServerBoot-0.0.1-SNAPSHOT.jar
+          remote: /usr/local/myProject/everydayMessageServerBoot-0.0.1-SNAPSHOT.jar
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          # 部署到服务器
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /usr/local/myProject
+            nohup java -jar everydayMessageServerBoot-0.0.1-SNAPSHOT.jar > wechart.log 2>&1 &
