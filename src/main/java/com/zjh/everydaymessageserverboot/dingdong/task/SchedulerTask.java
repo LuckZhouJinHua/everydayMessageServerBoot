@@ -34,7 +34,6 @@ public class SchedulerTask {
     public void scheduled1() {
 
         WeatherInfo weather = GaodeUtil.getNowWeatherInfo(getAdcCode("湖北省", "武汉市"));
-
        logger.info("=====>>>>>使用cron1执行定时任务");
        logger.info("返回数据{}" , JSONUtil.toJsonStr(weather));
     }
