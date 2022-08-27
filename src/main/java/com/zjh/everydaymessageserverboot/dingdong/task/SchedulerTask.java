@@ -1,16 +1,14 @@
 package com.zjh.everydaymessageserverboot.dingdong.task;
 
-import cn.hutool.json.JSON;
-import cn.hutool.json.JSONUtil;
-import com.zjh.everydaymessageserverboot.dingdong.entity.WeatherInfo;
+import com.zjh.everydaymessageserverboot.dingdong.entity.GirlFriend;
 import com.zjh.everydaymessageserverboot.dingdong.handel.SendMsg;
-import com.zjh.everydaymessageserverboot.dingdong.utils.GaodeUtil;
+import com.zjh.everydaymessageserverboot.dingdong.utils.ConfigConstants;
+import com.zjh.everydaymessageserverboot.dingdong.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import static com.zjh.everydaymessageserverboot.dingdong.utils.GaodeUtil.getAdcCode;
 
 /**
  *@filename: SchedulerTask.java
@@ -23,6 +21,12 @@ public class SchedulerTask {
 
     private static final Logger logger = LoggerFactory.getLogger(SchedulerTask.class);
 
+    static String xiaofei = "o_st-57nd9HXV8Br8ZbloAvCVpS8";
+
+    static String my = "o_st-5_rt_OAIBr3S6dPeECurmOc";
+
+    private static final GirlFriend girlFriend = new GirlFriend(Utils.getRandomName(), "湖北省", "武汉市", "1998-09-27", "2020-01-05", xiaofei);
+
     /**
      * @Description: 每天早上7:30执行一次
      * @Param: []
@@ -30,11 +34,23 @@ public class SchedulerTask {
      * @Author: cole.zhou
      * @Date: 2022/8/24 下午 1:39
      */
-    @Scheduled(cron = "0 * * * * ?")
+    @Scheduled(cron = "0 30 7 * * ?")
+    public void everyDayTask() {
+        SendMsg.send(girlFriend, ConfigConstants.EVERY_DAY_TEMPLATE);
+        logger.info("=====>>>>>everyDayTask执行定时任务成功.");
+    }
+
+    /**
+     * @Description: 上午10:30执行
+     * @Param: []
+     * @return: void
+     * @Author: cole.zhou
+     * @Date: 2022/8/26 下午 2:56
+     */
+    @Scheduled(cron = "0 30 10 * * ?")
     public void morningTask() {
-        WeatherInfo weather = GaodeUtil.getNowWeatherInfo(getAdcCode("湖北省", "武汉市"));
-        logger.info("=====>>>>>使用cron1执行定时任务");
-        logger.info("返回数据{}", JSONUtil.toJsonStr(weather));
+        SendMsg.send(girlFriend, ConfigConstants.MORNING_TEMPLATE);
+        logger.info("=====>>>>>morningTask执行定时任务成功.");
     }
 
     /**
@@ -44,11 +60,10 @@ public class SchedulerTask {
      * @Author: cole.zhou
      * @Date: 2022/8/24 下午 1:39
      */
-    @Scheduled(cron = "0 * * * * ?")
+    @Scheduled(cron = "0 00 12 * * ?")
     public void noonTask() {
-        WeatherInfo weather = GaodeUtil.getNowWeatherInfo(getAdcCode("湖北省", "武汉市"));
-        logger.info("=====>>>>>使用cron1执行定时任务");
-        logger.info("返回数据{}", JSONUtil.toJsonStr(weather));
+        SendMsg.send(girlFriend, ConfigConstants.NOON_TEMPLATE);
+        logger.info("=====>>>>>noonTask执行定时任务成功.");
     }
 
     /**
@@ -58,11 +73,10 @@ public class SchedulerTask {
      * @Author: cole.zhou
      * @Date: 2022/8/24 下午 1:39
      */
-    @Scheduled(cron = "0 * * * * ?")
+    @Scheduled(cron = "0 30 15 * * ?")
     public void afternoonTask() {
-        WeatherInfo weather = GaodeUtil.getNowWeatherInfo(getAdcCode("湖北省", "武汉市"));
-        logger.info("=====>>>>>使用cron1执行定时任务");
-        logger.info("返回数据{}", JSONUtil.toJsonStr(weather));
+        SendMsg.send(girlFriend, ConfigConstants.AFTERNOON_TEMPLATE);
+        logger.info("=====>>>>>afternoonTask执行定时任务成功.");
     }
 
     /**
@@ -72,9 +86,21 @@ public class SchedulerTask {
      * @Author: cole.zhou
      * @Date: 2022/8/24 下午 1:39
      */
-    @Scheduled(cron = "0 * * * * ?")
+    @Scheduled(cron = "0 30 22 * * ?")
     public void nightTask() {
-        SendMsg.send();
-        logger.info("=====>>>>>使用cron2执行定时任务");
+        SendMsg.send(girlFriend, ConfigConstants.NIGHT_TEMPLATE);
+        logger.info("=====>>>>>nightTask执行定时任务成功.");
     }
+
+
+
+    public static void main(String[] args) {
+
+
+
+        GirlFriend girlFriend = new GirlFriend(Utils.getRandomName(), "湖北省", "武汉市", "1998-09-27", "2020-01-05", my);
+        SendMsg.send(girlFriend, ConfigConstants.MORNING_TEMPLATE);
+    }
+
+
 }

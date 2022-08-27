@@ -20,20 +20,15 @@ import java.util.concurrent.atomic.AtomicReference;
  * Date 2022-08-22
  */
 public class Wx {
-    private static final Logger logger = LoggerFactory.getLogger(Wx.class);
 
+    private static final Logger logger = LoggerFactory.getLogger(Wx.class);
 
     public static final AtomicReference<WxMpService> serviceAtomicReference = new AtomicReference<>();
 
-    public  static void init() {
-
-        if (StrUtil.hasEmpty(ConfigConstants.WX_APP_ID, ConfigConstants.WX_SECRET, ConfigConstants.WX_TEMPLATE_ID)) {
-            throw new IllegalArgumentException("请检查配置");
-        }
-
+    public static void init() {
         WxMpDefaultConfigImpl mpConfig = new WxMpDefaultConfigImpl();
         mpConfig.setAppId(ConfigConstants.WX_APP_ID);
-        mpConfig.setSecret( ConfigConstants.WX_SECRET);
+        mpConfig.setSecret(ConfigConstants.WX_SECRET);
         serviceAtomicReference.set(new WxMpServiceImpl());
         serviceAtomicReference.get().setWxMpConfigStorage(mpConfig);
     }
@@ -47,17 +42,12 @@ public class Wx {
     }
 
     public static void sendTemplateMessage(WxMpTemplateMessage message) {
-
-
         getTemplateMsgService().ifPresent(service -> {
             try {
                 service.sendTemplateMsg(message);
             } catch (Exception e) {
-                logger.error("发送消息异常:{}" , JSONUtil.toJsonStr(e));
+                logger.error("发送消息异常:{}", JSONUtil.toJsonStr(e));
             }
         });
-
-
     }
-
 }

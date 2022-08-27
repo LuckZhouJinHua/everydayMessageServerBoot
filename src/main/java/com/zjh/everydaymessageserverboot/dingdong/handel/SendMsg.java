@@ -1,8 +1,9 @@
 package com.zjh.everydaymessageserverboot.dingdong.handel;
 
-import com.zjh.everydaymessageserverboot.dingdong.entity.GirlFriend;
-import com.zjh.everydaymessageserverboot.dingdong.utils.Utils;
-import org.springframework.beans.factory.annotation.Autowired;
+import cn.hutool.core.util.StrUtil;
+import com.zjh.everydaymessageserverboot.dingdong.entity.Friend;
+import com.zjh.everydaymessageserverboot.dingdong.enums.TemplateTypeEnum;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 
 /**
  *@filename: SendMsg.java
@@ -12,17 +13,22 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class SendMsg {
 
-    static String xiaofei = "o_st-57nd9HXV8Br8ZbloAvCVpS8";
-    static String my = "o_st-5_rt_OAIBr3S6dPeECurmOc";
+    /**
+     * @Description: 发送消息
+     * @Param: [friend, msgType]
+     * @return: void
+     * @Author: cole.zhou
+     * @Date: 2022/8/26 上午 9:50
+     */
+    public static void send(Friend friend, String msgType) {
 
-    public static void send() {
+
         Wx.init();
-        GirlFriend girlFriend = new GirlFriend(Utils.getRandomName(), "湖北省", "武汉市", "1998-09-27", "2020-01-05", my);
-        Wx.sendTemplateMessage(MessageFactory.resolveMessage(girlFriend));
+        WxMpTemplateMessage wxMpTemplateMessage = WxMpTemplateMessage.builder()
+                .url("https://ofpp.cn") // 点击后的跳转链接 可自行修改 也可以不填
+                .toUser(friend.getUserId())
+                .templateId(StrUtil.emptyToDefault(friend.getTemplateId(), TemplateTypeEnum.getTemplateType(msgType)))
+                .data(MessageFactory.getTemplateData(friend, msgType)).build();
+        Wx.sendTemplateMessage(wxMpTemplateMessage);
     }
-
-    public static void main(String[] args) {
-        send();
-    }
-
 }

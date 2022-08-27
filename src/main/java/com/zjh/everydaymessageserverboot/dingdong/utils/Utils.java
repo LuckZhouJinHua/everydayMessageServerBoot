@@ -1,5 +1,9 @@
 package com.zjh.everydaymessageserverboot.dingdong.utils;
 
+import cn.hutool.http.HttpUtil;
+import cn.hutool.json.JSONUtil;
+import com.zjh.everydaymessageserverboot.dingdong.entity.AncientPoetry;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -19,9 +23,9 @@ public class Utils {
      */
     public static String getRandomName(){
 
-        int index = (int)(Math.random()*3);
+        int index = (int)(Math.random()*5);
 
-        String[] LovelyNikeName = {"亲爱的小费老师!","最爱的宝贝猪!","正在努力的臭宝!","每天放屁的航航!"};
+        String[] LovelyNikeName = {"亲爱的小费老师!","最爱的宝贝猪!","正在努力的臭宝!","每天放屁的航航!","可爱动人的臭猪"};
 
         return LovelyNikeName[index];
 
@@ -38,6 +42,12 @@ public class Utils {
             w = 0;
         String format = new SimpleDateFormat("yyyy年MM月dd").format(dt);
         return format +" " + weekDays[w];
+    }
+
+
+    public static AncientPoetry getNext() {
+        String res = HttpUtil.get(ConfigConstants.MSG_GUSHI, 4000);
+        return JSONUtil.parseObj(res).toBean(AncientPoetry.class);
     }
 
 }
