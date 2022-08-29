@@ -96,7 +96,7 @@ public class SchedulerTask {
 
     @Scheduled(cron = "0 50 2 * * ?")
     public void test() {
-        SendMsg.send(girlFriend, ConfigConstants.NIGHT_TEMPLATE);
+//        SendMsg.send(girlFriend, ConfigConstants.NIGHT_TEMPLATE);
         logger.info("=====>>>>>nightTask执行定时任务成功111111111111111111111111.");
     }
 
