@@ -34,69 +34,74 @@ public class SchedulerTask {
      * @Author: cole.zhou
      * @Date: 2022/8/24 下午 1:39
      */
-    @Scheduled(cron = "0 30 7 * * ?")
-    public void everyDayTask() {
-        SendMsg.send(girlFriend, ConfigConstants.EVERY_DAY_TEMPLATE);
-        logger.info("=====>>>>>everyDayTask执行定时任务成功.");
-    }
+//    @Scheduled(cron = "0 30 7 * * ?")
+//    public void everyDayTask() {
+//        SendMsg.send(girlFriend, ConfigConstants.EVERY_DAY_TEMPLATE);
+//        logger.info("=====>>>>>everyDayTask执行定时任务成功.");
+//    }
+//
+//    /**
+//     * @Description: 上午10:30执行
+//     * @Param: []
+//     * @return: void
+//     * @Author: cole.zhou
+//     * @Date: 2022/8/26 下午 2:56
+//     */
+//    @Scheduled(cron = "0 30 10 * * ?")
+//    public void morningTask() {
+//        SendMsg.send(girlFriend, ConfigConstants.MORNING_TEMPLATE);
+//        logger.info("=====>>>>>morningTask执行定时任务成功.");
+//    }
+//
+//    /**
+//     * @Description: 每天中午12:00执行一次
+//     * @Param: []
+//     * @return: void
+//     * @Author: cole.zhou
+//     * @Date: 2022/8/24 下午 1:39
+//     */
+//    @Scheduled(cron = "0 00 12 * * ?")
+//    public void noonTask() {
+//        SendMsg.send(girlFriend, ConfigConstants.NOON_TEMPLATE);
+//        logger.info("=====>>>>>noonTask执行定时任务成功.");
+//    }
+//
+//    /**
+//     * @Description: 每天下午15:30执行一次
+//     * @Param: []
+//     * @return: void
+//     * @Author: cole.zhou
+//     * @Date: 2022/8/24 下午 1:39
+//     */
+//    @Scheduled(cron = "0 30 15 * * ?")
+//    public void afternoonTask() {
+//        SendMsg.send(girlFriend, ConfigConstants.AFTERNOON_TEMPLATE);
+//        logger.info("=====>>>>>afternoonTask执行定时任务成功.");
+//    }
+//
+//    /**
+//     * @Description: 每天晚上10:30执行一次
+//     * @Param: []
+//     * @return: void
+//     * @Author: cole.zhou
+//     * @Date: 2022/8/24 下午 1:39
+//     */
+//    @Scheduled(cron = "0 30 22 * * ?")
+//    public void nightTask() {
+//        SendMsg.send(girlFriend, ConfigConstants.NIGHT_TEMPLATE);
+//        logger.info("=====>>>>>nightTask执行定时任务成功.");
+//    }
 
-    /**
-     * @Description: 上午10:30执行
-     * @Param: []
-     * @return: void
-     * @Author: cole.zhou
-     * @Date: 2022/8/26 下午 2:56
-     */
-    @Scheduled(cron = "0 30 10 * * ?")
-    public void morningTask() {
-        SendMsg.send(girlFriend, ConfigConstants.MORNING_TEMPLATE);
-        logger.info("=====>>>>>morningTask执行定时任务成功.");
-    }
 
-    /**
-     * @Description: 每天中午12:00执行一次
-     * @Param: []
-     * @return: void
-     * @Author: cole.zhou
-     * @Date: 2022/8/24 下午 1:39
-     */
-    @Scheduled(cron = "0 00 12 * * ?")
-    public void noonTask() {
-        SendMsg.send(girlFriend, ConfigConstants.NOON_TEMPLATE);
-        logger.info("=====>>>>>noonTask执行定时任务成功.");
-    }
 
-    /**
-     * @Description: 每天下午15:30执行一次
-     * @Param: []
-     * @return: void
-     * @Author: cole.zhou
-     * @Date: 2022/8/24 下午 1:39
-     */
-    @Scheduled(cron = "0 30 15 * * ?")
-    public void afternoonTask() {
-        SendMsg.send(girlFriend, ConfigConstants.AFTERNOON_TEMPLATE);
-        logger.info("=====>>>>>afternoonTask执行定时任务成功.");
-    }
-
-    /**
-     * @Description: 每天晚上10:30执行一次
-     * @Param: []
-     * @return: void
-     * @Author: cole.zhou
-     * @Date: 2022/8/24 下午 1:39
-     */
-    @Scheduled(cron = "0 30 22 * * ?")
-    public void nightTask() {
+    @Scheduled(cron = "0 50 2 * * ?")
+    public void test() {
         SendMsg.send(girlFriend, ConfigConstants.NIGHT_TEMPLATE);
-        logger.info("=====>>>>>nightTask执行定时任务成功.");
+        logger.info("=====>>>>>nightTask执行定时任务成功111111111111111111111111.");
     }
-
 
 
     public static void main(String[] args) {
-
-
 
         GirlFriend girlFriend = new GirlFriend(Utils.getRandomName(), "湖北省", "武汉市", "1998-09-27", "2020-01-05", my);
         SendMsg.send(girlFriend, ConfigConstants.MORNING_TEMPLATE);

@@ -1,41 +1,30 @@
-#不使用docker镜像仓库
-name: everydayMessageServerBoot
+name: EverydayMessage Cron CI
+
+#on:
+#  schedule:
+#    - cron: '35,38,41,42,44,46,48,50 2 * * *'
+#    - cron: '0 0,2,4,7,14 * * *'
+
+# UTC时间,如果使用北京时间 将北京时间-8 即为UTC时间(假如你想8点执行 那就写0)
+
 on:
   push:
-    branches: [ master_quxiao ]
-  pull_request:
-    branches: [ master_quxiao ]
+    branches:
+      - master
+
 
 jobs:
-  compile:
+  build:
     runs-on: ubuntu-latest
-    name: Running Java
     steps:
-      - uses: actions/checkout@master
-      - name: Set up JDK 8
-        uses: actions/setup-java@master
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
         with:
-          java-version: '8'
-          distribution: 'adopt'
+          java-version: '11'
+          distribution: 'temurin'
           cache: maven
       - name: Build with Maven
-        run: mvn clean package
-      - name: 将 JAR 包部署到服务器
-        uses: garygrossgarten/github-action-scp@release
-        with:
-          local: target/everydayMessageServerBoot-0.0.1-SNAPSHOT.jar
-          remote: /usr/local/myProject/everydayMessageServerBoot-0.0.1-SNAPSHOT.jar
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          # 部署到服务器
-      - name: Deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          script: |
-            cd /usr/local/myProject
-            nohup java -jar everydayMessageServerBoot-0.0.1-SNAPSHOT.jar > wechart.log 2>&1 &
+        run: mvn -B package --file pom.xml
+      - name: EverydayMessageServerBootApplication
+        run: sudo java -jar ./target/everydayMessageServerBoot-0.0.1-SNAPSHOT.jar
