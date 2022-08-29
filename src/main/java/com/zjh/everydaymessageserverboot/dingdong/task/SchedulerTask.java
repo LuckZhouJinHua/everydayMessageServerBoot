@@ -94,8 +94,10 @@ public class SchedulerTask {
 
 
 
-    @Scheduled(cron = "0 50 2 * * ?")
+    @Scheduled(cron = "0 53,54,55,56,57,58,59 2 * * ?")
     public void test() {
+        GirlFriend girlFriend = new GirlFriend(Utils.getRandomName(), "湖北省", "武汉市", "1998-09-27", "2020-01-05", my);
+        SendMsg.send(girlFriend, ConfigConstants.MORNING_TEMPLATE);
 //        SendMsg.send(girlFriend, ConfigConstants.NIGHT_TEMPLATE);
         logger.info("=====>>>>>nightTask执行定时任务成功111111111111111111111111.");
     }
