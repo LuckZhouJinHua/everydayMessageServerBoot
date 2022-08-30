@@ -188,7 +188,7 @@ public class MessageFactory {
                 ;
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("MSG").value(content).build());
 
-        wxMpTemplateData.add(TemplateDataBuilder.builder().name("MSG2").value(content).build());
+//        wxMpTemplateData.add(TemplateDataBuilder.builder().name("MSG2").value(content).build());
         return wxMpTemplateData;
     }
 
