@@ -10,7 +10,7 @@ name: EverydayMessage Cron CI
 on:
   push:
     branches:
-      - master
+      - master1
 
 
 jobs:

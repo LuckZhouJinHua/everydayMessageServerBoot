@@ -79,6 +79,16 @@ public class MessageFactory {
 
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("friendName").value(friend.getFullName() + " 早上好").color("#F53F3F").build());
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("todayDate").value(Utils.getTodayOfDate(new Date())).color("#F77234").build());
+
+        /*获取彩虹屁*/
+        String caihongpi = Utils.gethualihushao("1");
+        if(caihongpi.contains("XXX")){
+            String replace = caihongpi.replace("XXX", friend.getFullName());
+            wxMpTemplateData.add(TemplateDataBuilder.builder().name("hualihushao").value(replace).color("#37D4CF").build());
+        }else {
+            wxMpTemplateData.add(TemplateDataBuilder.builder().name("hualihushao").value(caihongpi).color("#37D4CF").build());
+        }
+
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("howOld").value(friend.getHowOld().toString()).color("#FF9A2E").build());
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("howLongLived").value(friend.getHowLongLived()).color("#F9CC45").build());
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("nextBirthday").value(friend.getNextBirthdayDays()).color("#FADC19").build());
@@ -100,6 +110,8 @@ public class MessageFactory {
             wxMpTemplateData.add(TemplateDataBuilder.builder().name("weatherTips").value("今日可能有雨,记得带伞哦,宝!").color("#8D4EDA").build());
         }else if(weather.getWeather().contains("雪")){
             wxMpTemplateData.add(TemplateDataBuilder.builder().name("weatherTips").value("宝贝!下雪啦,要穿暖和出门看你喜欢的雪花!").color("#8D4EDA").build());
+        }else if(weather.getWeather().contains("阴")){
+            wxMpTemplateData.add(TemplateDataBuilder.builder().name("weatherTips").value("虽然今天天气阴沉,但是内心要向往阳光哦!").color("#8D4EDA").build());
         }
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("author").value(ancientPoetry.getAuthor()).color("#4e5969").build());
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("origin").value(ancientPoetry.getOrigin()).color("#4e5969").build());
@@ -143,8 +155,13 @@ public class MessageFactory {
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("tips2").value("记得也想我").color("#FF7D00").build());
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("tips3").value("记得稍微运动").color("#FF7D00").build());
 
-        wxMpTemplateData.add(TemplateDataBuilder.builder().name("content").value(ancientPoetry.getContent()).color("#F53F3F").build());
-
+        String qinghua = Utils.gethualihushao("2");
+        if(qinghua.contains("XXX")){
+            String replace = qinghua.replace("XXX", friend.getFullName());
+            wxMpTemplateData.add(TemplateDataBuilder.builder().name("content").value(replace).color("#F53F3F").build());
+        }else {
+            wxMpTemplateData.add(TemplateDataBuilder.builder().name("content").value(qinghua).color("#F53F3F").build());
+        }
 
         return wxMpTemplateData;
 
@@ -170,6 +187,8 @@ public class MessageFactory {
                 + "这个中午也是爱你的中午! \n"
                 ;
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("MSG").value(content).build());
+
+        wxMpTemplateData.add(TemplateDataBuilder.builder().name("MSG2").value(content).build());
         return wxMpTemplateData;
     }
 

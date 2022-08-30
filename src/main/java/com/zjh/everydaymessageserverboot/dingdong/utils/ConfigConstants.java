@@ -27,9 +27,21 @@ public class ConfigConstants {
     /*获取随机古诗api*/
     public static final String MSG_GUSHI = "https://v1.jinrishici.com/shuqing/aiqing";
 
+    /*天行接口key*/
+    public static final String TIAN_XING = "b9609d80cfdf734dfb3503f8bda81992";
+
+    //彩虹屁接口 每天100次免费
+    public static final String caihonhpi = "http://api.tianapi.com/caihongpi/index?key="+ConfigConstants.TIAN_XING;
+    //土味情话接口
+    public static final String qinghua = "http://api.tianapi.com/saylove/index?key="+ConfigConstants.TIAN_XING;
+    //经典台词
+    public static final String taici = "http://api.tianapi.com/dialogue/index?key="+ConfigConstants.TIAN_XING;
+
+
+
 
     /*微信模板id*/
-    public static final String WX_TEMPLATE_ID_EVERY_DAY = "isir7UNk8Ryg9eupHVJXGqJZKtfi3XAOxrO_f2f4uBc";
+    public static final String WX_TEMPLATE_ID_EVERY_DAY = "rWOHn1BGLoHSyW96NEiLcssxxS36D2vDUxcDUdtpNvU";
     public static final String WX_TEMPLATE_ID_MORNING = "UnI7TjIvku2Hp_dMdUE3YYLIsZL5Dc4irO8ts0EhNwg";
     public static final String WX_TEMPLATE_ID_NOON = "LjrxIax22WgKiBDX18BH2cUn6zqNfRVthY3_ntlOVUA";
     public static final String WX_TEMPLATE_ID_AFTERNOON = "LjrxIax22WgKiBDX18BH2cUn6zqNfRVthY3_ntlOVUA";

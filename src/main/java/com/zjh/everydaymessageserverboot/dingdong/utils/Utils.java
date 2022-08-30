@@ -5,9 +5,12 @@ import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.zjh.everydaymessageserverboot.dingdong.entity.AncientPoetry;
-import com.zjh.everydaymessageserverboot.dingdong.entity.TianXingRespData;
+import com.zjh.everydaymessageserverboot.dingdong.handel.MessageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -17,8 +20,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import static org.apache.logging.log4j.message.MapMessage.MapFormat.JSON;
-
 /**
  *@filename: Utils.java
  *@Describe:
@@ -27,18 +28,34 @@ import static org.apache.logging.log4j.message.MapMessage.MapFormat.JSON;
  */
 public class Utils {
 
+    private static final Logger logger = LoggerFactory.getLogger(Utils.class);
 
-    public static String getCaiHongPi() {
-        //彩虹屁接口 每天100次免费
-        String httpUrl = "http://api.tianapi.com/caihongpi/index?key=b9609d80cfdf734dfb3503f8bda81992";
-        //土味情话接口
-        String qinghua = "http://api.tianapi.com/saylove/index?key=b9609d80cfdf734dfb3503f8bda81992";
-        BufferedReader reader = null;
-        String result = null;
-        StringBuffer sbf = new StringBuffer();
 
+    public static String gethualihushao(String type) {
+        String  result = null;
+        if(type.equals("1")){
+            result = sendPost(ConfigConstants.caihonhpi);
+        }else if(type.equals("2")){
+            result = sendPost(ConfigConstants.qinghua);
+        } else if(type.equals("3")){
+            result = sendPost(ConfigConstants.taici);
+        }
+        if(result == null){
+            logger.error("请求出错了吧!返回了空数据");
+            return "";
+        }
+
+        JSONObject content = JSONUtil.parseObj(result).getJSONArray("newslist").getJSONObject(0);
+        return (String) content.get("content");
+    }
+
+
+    private static String sendPost(String sendUrl)  {
+        StringBuilder sbf = new StringBuilder();
+        String result ;
+        BufferedReader reader;
         try {
-            URL url = new URL(qinghua);
+            URL url = new URL(sendUrl);
             HttpURLConnection connection = (HttpURLConnection) url
                     .openConnection();
             connection.setRequestMethod("GET");
@@ -50,21 +67,27 @@ public class Utils {
                 sbf.append("\r\n");
             }
             reader.close();
-            result = sbf.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            logger.error("发送请求异常,获取天行接口数据失败:{}" , JSONUtil.toJsonStr(e));
+            return null;
         }
-
-        JSONObject jsonObject = JSONUtil.parseObj(result);
-        JSONArray newslist = jsonObject.getJSONArray("newslist");
-        JSONObject content = newslist.getJSONObject(0);
-        String content1 = (String) content.get("content");
-        return content1;
+        result = sbf.toString();
+        return result;
     }
 
     public static void main(String[] args) {
-        String caiHongPi = getCaiHongPi();
+        String caiHongPi = gethualihushao("3");
         System.out.println("caiHongPi = " + caiHongPi);
+
+        String str = "XXX真是人间水蜜桃了";
+        int x = str.indexOf("X");
+
+        if(str.contains("XXX")){
+            String replace = str.replace("XXX", "小红帽");
+            System.out.println("replace = " + replace);
+            System.out.println("replace = " + str);
+        }
+
     }
 
 
