@@ -34,14 +34,17 @@ public class ConfigConstants {
     public static final String caihonhpi = "http://api.tianapi.com/caihongpi/index?key="+ConfigConstants.TIAN_XING;
     //土味情话接口
     public static final String qinghua = "http://api.tianapi.com/saylove/index?key="+ConfigConstants.TIAN_XING;
-    //经典台词
-    public static final String taici = "http://api.tianapi.com/dialogue/index?key="+ConfigConstants.TIAN_XING;
+    //早安心语
+    public static final String zaoan = "http://api.tianapi.com/zaoan/index?key="+ConfigConstants.TIAN_XING;
+
+    //晚安心语
+    public static final String wanan = "http://api.tianapi.com/wanan/index?key="+ConfigConstants.TIAN_XING;
 
 
 
 
     /*微信模板id*/
-    public static final String WX_TEMPLATE_ID_EVERY_DAY = "rWOHn1BGLoHSyW96NEiLcssxxS36D2vDUxcDUdtpNvU";
+    public static final String WX_TEMPLATE_ID_EVERY_DAY = "WGZwwDbpApR2yttaaCTaZ7M9126v0xcREVGOlLq9wgE";
     public static final String WX_TEMPLATE_ID_MORNING = "UnI7TjIvku2Hp_dMdUE3YYLIsZL5Dc4irO8ts0EhNwg";
     public static final String WX_TEMPLATE_ID_NOON = "LjrxIax22WgKiBDX18BH2cUn6zqNfRVthY3_ntlOVUA";
     public static final String WX_TEMPLATE_ID_AFTERNOON = "LjrxIax22WgKiBDX18BH2cUn6zqNfRVthY3_ntlOVUA";

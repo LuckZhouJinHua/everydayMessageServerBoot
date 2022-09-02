@@ -1,11 +1,11 @@
 package com.zjh.everydaymessageserverboot.dingdong.utils;
 
 import cn.hutool.http.HttpUtil;
-import cn.hutool.json.JSONArray;
-import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSON;
 import com.zjh.everydaymessageserverboot.dingdong.entity.AncientPoetry;
-import com.zjh.everydaymessageserverboot.dingdong.handel.MessageFactory;
+import com.zjh.everydaymessageserverboot.dingdong.entity.TianXingInnerData;
+import com.zjh.everydaymessageserverboot.dingdong.entity.TianXingRespData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,22 +31,23 @@ public class Utils {
     private static final Logger logger = LoggerFactory.getLogger(Utils.class);
 
 
-    public static String gethualihushao(String type) {
+    public static TianXingInnerData gethualihushao(String type) {
         String  result = null;
+        TianXingInnerData tianXingInnerData = null;
         if(type.equals("1")){
             result = sendPost(ConfigConstants.caihonhpi);
         }else if(type.equals("2")){
             result = sendPost(ConfigConstants.qinghua);
         } else if(type.equals("3")){
-            result = sendPost(ConfigConstants.taici);
+            result = sendPost(ConfigConstants.zaoan);
         }
         if(result == null){
             logger.error("请求出错了吧!返回了空数据");
-            return "";
+            return tianXingInnerData;
         }
-
-        JSONObject content = JSONUtil.parseObj(result).getJSONArray("newslist").getJSONObject(0);
-        return (String) content.get("content");
+        TianXingRespData tianXingRespData = JSON.parseObject(result, TianXingRespData.class);
+         tianXingInnerData = tianXingRespData.getNewslist().get(0);
+        return tianXingInnerData;
     }
 
 
@@ -76,17 +77,10 @@ public class Utils {
     }
 
     public static void main(String[] args) {
-        String caiHongPi = gethualihushao("3");
-        System.out.println("caiHongPi = " + caiHongPi);
+        TianXingInnerData gethualihushao = gethualihushao("3");
+        System.out.println("caiHongPi = " + JSON.toJSONString(gethualihushao));
 
-        String str = "XXX真是人间水蜜桃了";
-        int x = str.indexOf("X");
 
-        if(str.contains("XXX")){
-            String replace = str.replace("XXX", "小红帽");
-            System.out.println("replace = " + replace);
-            System.out.println("replace = " + str);
-        }
 
     }
 

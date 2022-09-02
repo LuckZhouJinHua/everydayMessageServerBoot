@@ -14,7 +14,7 @@ public class TianXingRespData {
 
     private String msg;
 
-    private List<String> newslist;
+    private List<TianXingInnerData> newslist;
 
     public TianXingRespData() {
     }
@@ -35,11 +35,15 @@ public class TianXingRespData {
         this.msg = msg;
     }
 
-    public List<String> getNewslist() {
+    public List<TianXingInnerData> getNewslist() {
         return newslist;
     }
 
-    public void setNewslist(List<String> newslist) {
+    public void setNewslist(List<TianXingInnerData> newslist) {
         this.newslist = newslist;
     }
 }
+
+
+
+
