@@ -46,9 +46,9 @@ public class ConfigConstants {
     /*微信模板id*/
     public static final String WX_TEMPLATE_ID_EVERY_DAY = "WGZwwDbpApR2yttaaCTaZ7M9126v0xcREVGOlLq9wgE";
     public static final String WX_TEMPLATE_ID_MORNING = "UnI7TjIvku2Hp_dMdUE3YYLIsZL5Dc4irO8ts0EhNwg";
-    public static final String WX_TEMPLATE_ID_NOON = "LjrxIax22WgKiBDX18BH2cUn6zqNfRVthY3_ntlOVUA";
-    public static final String WX_TEMPLATE_ID_AFTERNOON = "LjrxIax22WgKiBDX18BH2cUn6zqNfRVthY3_ntlOVUA";
-    public static final String WX_TEMPLATE_ID_NIGHT = "cXu_Q1bBpKzBoyuFvsIWA7GyPpzy2m_M7dbsLw0FioQ";
+    public static final String WX_TEMPLATE_ID_NOON = "cyU4GsyXQt6Dl2s05g-224UBPnUVd3BSy7zNzGAHzfU";
+    public static final String WX_TEMPLATE_ID_AFTERNOON = "cyU4GsyXQt6Dl2s05g-224UBPnUVd3BSy7zNzGAHzfU";
+    public static final String WX_TEMPLATE_ID_NIGHT = "-2UgnBUQotut_mSfe9ODXSYM7Qp4JnclZ1JnW56p6D8";
 
 
     /*每日模板类型*/

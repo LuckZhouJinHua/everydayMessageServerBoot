@@ -106,7 +106,7 @@ public class SchedulerTask {
     public static void main(String[] args) {
 
         GirlFriend girlFriend = new GirlFriend(Utils.getRandomName(), "湖北省", "武汉市", "1998-09-02", "2020-01-05", my);
-        SendMsg.send(girlFriend, ConfigConstants.EVERY_DAY_TEMPLATE);
+        SendMsg.send(girlFriend, ConfigConstants.NIGHT_TEMPLATE);
     }
 
 

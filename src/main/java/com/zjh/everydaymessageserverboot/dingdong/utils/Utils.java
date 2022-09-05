@@ -40,6 +40,8 @@ public class Utils {
             result = sendPost(ConfigConstants.qinghua);
         } else if(type.equals("3")){
             result = sendPost(ConfigConstants.zaoan);
+        }else if(type.equals("4")){
+            result = sendPost(ConfigConstants.wanan);
         }
         if(result == null){
             logger.error("请求出错了吧!返回了空数据");

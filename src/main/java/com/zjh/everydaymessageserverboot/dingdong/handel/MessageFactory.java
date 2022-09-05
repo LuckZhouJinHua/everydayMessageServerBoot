@@ -1,8 +1,10 @@
 package com.zjh.everydaymessageserverboot.dingdong.handel;
+
 import cn.hutool.json.JSONUtil;
 import com.zjh.everydaymessageserverboot.dingdong.entity.AncientPoetry;
 import com.zjh.everydaymessageserverboot.dingdong.entity.Friend;
 import com.zjh.everydaymessageserverboot.dingdong.entity.TemplateDataBuilder;
+import com.zjh.everydaymessageserverboot.dingdong.entity.TianXingInnerData;
 import com.zjh.everydaymessageserverboot.dingdong.entity.WeatherInfo;
 import com.zjh.everydaymessageserverboot.dingdong.utils.ConfigConstants;
 import com.zjh.everydaymessageserverboot.dingdong.utils.GaodeUtil;
@@ -10,6 +12,7 @@ import com.zjh.everydaymessageserverboot.dingdong.utils.Utils;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -17,11 +20,11 @@ import java.util.List;
 
 
 /**
- * @Description:  消息处理工厂类
+ * @Description: 消息处理工厂类
  * @Param:
  * @return:
- * @Author:  cole.zhou
- * @Date:  2022/8/26 上午 10:11
+ * @Author: cole.zhou
+ * @Date: 2022/8/26 上午 10:11
  */
 public class MessageFactory {
 
@@ -29,11 +32,11 @@ public class MessageFactory {
 
 
     /**
-     * @Description:  根据类型返回对应的封装数据
-     * @Param:  [friend, msgType]
-     * @return:  java.util.List<me.chanjar.weixin.mp.bean.template.WxMpTemplateData>
-     * @Author:  cole.zhou
-     * @Date:  2022/8/26 下午 2:00
+     * @Description: 根据类型返回对应的封装数据
+     * @Param: [friend, msgType]
+     * @return: java.util.List<me.chanjar.weixin.mp.bean.template.WxMpTemplateData>
+     * @Author: cole.zhou
+     * @Date: 2022/8/26 下午 2:00
      */
     public static List<WxMpTemplateData> getTemplateData(Friend friend, String msgType) {
         if (ConfigConstants.EVERY_DAY_TEMPLATE.equals(msgType)) {
@@ -62,11 +65,11 @@ public class MessageFactory {
      */
 
     /**
-     * @Description:  每日提醒
-     * @Param:  [friend]
-     * @return:  java.util.List<me.chanjar.weixin.mp.bean.template.WxMpTemplateData>
-     * @Author:  cole.zhou
-     * @Date:  2022/8/26 上午 9:55
+     * @Description: 每日提醒
+     * @Param: [friend]
+     * @return: java.util.List<me.chanjar.weixin.mp.bean.template.WxMpTemplateData>
+     * @Author: cole.zhou
+     * @Date: 2022/8/26 上午 9:55
      */
     public static List<WxMpTemplateData> everyDayTemplate(Friend friend) {
         /*获取天气信息*/
@@ -77,10 +80,10 @@ public class MessageFactory {
         ArrayList<WxMpTemplateData> wxMpTemplateData = new ArrayList<>();
         /*获取早安问候语*/
         String zaoan = Utils.gethualihushao("3").getContent();
-        if(zaoan.contains("XXX")){
+        if (zaoan.contains("XXX")) {
             String replace = zaoan.replace("XXX", friend.getFullName());
             wxMpTemplateData.add(TemplateDataBuilder.builder().name("hualihushao").value(replace).color("#37D4CF").build());
-        }else {
+        } else {
             wxMpTemplateData.add(TemplateDataBuilder.builder().name("hualihushao").value(zaoan).color("#37D4CF").build());
         }
 
@@ -91,40 +94,40 @@ public class MessageFactory {
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("howLongLived").value(friend.getHowLongLived()).color("#F9CC45").build());
 
 
-        if(Integer.parseInt(friend.getNextBirthdayDays()) == 0){
+        if (Integer.parseInt(friend.getNextBirthdayDays()) == 0) {
             wxMpTemplateData.add(TemplateDataBuilder.builder().name("nextBirthday1").value("亲爱的宝贝猪!").build());
             wxMpTemplateData.add(TemplateDataBuilder.builder().name("nextBirthday2").value("生日快乐呀!").color("#FADC19").build());
-        }else{
+        } else {
             wxMpTemplateData.add(TemplateDataBuilder.builder().name("nextBirthday1").value("下一次阳历生日还有").build());
-            wxMpTemplateData.add(TemplateDataBuilder.builder().name("nextBirthday2").value(friend.getNextBirthdayDays()+"天").color("#FADC19").build());
+            wxMpTemplateData.add(TemplateDataBuilder.builder().name("nextBirthday2").value(friend.getNextBirthdayDays() + "天").color("#FADC19").build());
         }
 
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("nextMemorialDay").value(friend.getNextMemorialDay()).color("#9FDB1D").build());
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("province").value(friend.getProvince()).color("#4CD263").build());
-        wxMpTemplateData.add( TemplateDataBuilder.builder().name("city").value(friend.getCity()).color("#4CD263").build());
+        wxMpTemplateData.add(TemplateDataBuilder.builder().name("city").value(friend.getCity()).color("#4CD263").build());
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("weather").value(weather.getWeather()).color("#37D4CF").build());
 
-        wxMpTemplateData.add(TemplateDataBuilder.builder().name("temperature").value(weather.getTemperature()+"℃").color("#37D4CF").build());
-        wxMpTemplateData.add(TemplateDataBuilder.builder().name("winddirection").value(weather.getWinddirection()+"风").color("#57A9FB").build());
-        wxMpTemplateData.add(TemplateDataBuilder.builder().name("windpower").value(weather.getWindpower()+"级").color("#57A9FB").build());
-        wxMpTemplateData.add(TemplateDataBuilder.builder().name("humidity").value(weather.getHumidity()+"%").color("#4080FF").build());
+        wxMpTemplateData.add(TemplateDataBuilder.builder().name("temperature").value(weather.getTemperature() + "℃").color("#37D4CF").build());
+        wxMpTemplateData.add(TemplateDataBuilder.builder().name("winddirection").value(weather.getWinddirection() + "风").color("#57A9FB").build());
+        wxMpTemplateData.add(TemplateDataBuilder.builder().name("windpower").value(weather.getWindpower() + "级").color("#57A9FB").build());
+        wxMpTemplateData.add(TemplateDataBuilder.builder().name("humidity").value(weather.getHumidity() + "%").color("#4080FF").build());
 
 
-        String  wenduTips = "";
+        String wenduTips = "";
         /*当天气稍微冷时加入提示*/
-        if(Integer.parseInt(weather.getTemperature()) < 24){
+        if (Integer.parseInt(weather.getTemperature()) < 24) {
             wenduTips = "今天天气有些冷啦,出门记得加衣服哦";
         }
 
         /*特殊天气提示*/
-        if(weather.getWeather().contains("云") || weather.getWeather().contains("晴")){
-            wxMpTemplateData.add(TemplateDataBuilder.builder().name("weatherTips").value("今日天气感觉不错,要保持好心情哦!"+wenduTips).color("#8D4EDA").build());
-        }else if(weather.getWeather().contains("雨")){
-            wxMpTemplateData.add(TemplateDataBuilder.builder().name("weatherTips").value("今日可能有雨,记得带伞哦,宝!"+wenduTips).color("#8D4EDA").build());
-        }else if(weather.getWeather().contains("雪")){
-            wxMpTemplateData.add(TemplateDataBuilder.builder().name("weatherTips").value("宝贝!下雪啦,要穿暖和出门看你喜欢的雪花!"+wenduTips).color("#8D4EDA").build());
-        }else if(weather.getWeather().contains("阴")){
-            wxMpTemplateData.add(TemplateDataBuilder.builder().name("weatherTips").value("虽然今天天气阴沉,但是内心要向往阳光哦!"+wenduTips).color("#8D4EDA").build());
+        if (weather.getWeather().contains("云") || weather.getWeather().contains("晴")) {
+            wxMpTemplateData.add(TemplateDataBuilder.builder().name("weatherTips").value("今日天气感觉不错,要保持好心情哦!" + wenduTips).color("#8D4EDA").build());
+        } else if (weather.getWeather().contains("雨")) {
+            wxMpTemplateData.add(TemplateDataBuilder.builder().name("weatherTips").value("今日可能有雨,记得带伞哦,宝!" + wenduTips).color("#8D4EDA").build());
+        } else if (weather.getWeather().contains("雪")) {
+            wxMpTemplateData.add(TemplateDataBuilder.builder().name("weatherTips").value("宝贝!下雪啦,要穿暖和出门看你喜欢的雪花!" + wenduTips).color("#8D4EDA").build());
+        } else if (weather.getWeather().contains("阴")) {
+            wxMpTemplateData.add(TemplateDataBuilder.builder().name("weatherTips").value("虽然今天天气阴沉,但是内心要向往阳光哦!" + wenduTips).color("#8D4EDA").build());
         }
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("author").value(ancientPoetry.getAuthor()).color("#4e5969").build());
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("origin").value(ancientPoetry.getOrigin()).color("#4e5969").build());
@@ -133,15 +136,14 @@ public class MessageFactory {
     }
 
 
-
     /**
-     * @Description:  上午提醒
-     * @Param:  []
-     * @return:  java.util.List<me.chanjar.weixin.mp.bean.template.WxMpTemplateData>
-     * @Author:  cole.zhou
-     * @Date:  2022/8/26 上午 9:55
+     * @Description: 上午提醒
+     * @Param: []
+     * @return: java.util.List<me.chanjar.weixin.mp.bean.template.WxMpTemplateData>
+     * @Author: cole.zhou
+     * @Date: 2022/8/26 上午 9:55
      */
-    public static List<WxMpTemplateData> morningTemplateData(Friend friend){
+    public static List<WxMpTemplateData> morningTemplateData(Friend friend) {
 
         AncientPoetry ancientPoetry = Utils.getNext();
 
@@ -149,7 +151,7 @@ public class MessageFactory {
         ArrayList<WxMpTemplateData> wxMpTemplateData = new ArrayList<>();
 
 
-        wxMpTemplateData.add(TemplateDataBuilder.builder().name("wenhouyu").value("上午好呀," +friend.getFullName()).color("#F53F3F").build());
+        wxMpTemplateData.add(TemplateDataBuilder.builder().name("wenhouyu").value("上午好呀," + friend.getFullName()).color("#F53F3F").build());
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("msg1").value("如果此时的我没有跟你发消息").color("#F77234").build());
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("msg2").value("并不代表不想你").color("#FF9A2E").build());
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("msg3").value("恰恰是我一直在想你哦").color("#F9CC45").build());
@@ -169,10 +171,10 @@ public class MessageFactory {
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("tips3").value("记得稍微运动").color("#FF7D00").build());
 
         String qinghua = Utils.gethualihushao("2").getContent();
-        if(qinghua.contains("XXX")){
+        if (qinghua.contains("XXX")) {
             String replace = qinghua.replace("XXX", friend.getFullName());
             wxMpTemplateData.add(TemplateDataBuilder.builder().name("content").value(replace).color("#F53F3F").build());
-        }else {
+        } else {
             wxMpTemplateData.add(TemplateDataBuilder.builder().name("content").value(qinghua).color("#F53F3F").build());
         }
 
@@ -182,23 +184,22 @@ public class MessageFactory {
 
 
     /**
-     * @Description:  中午提醒数据
-     * @Param:  []
-     * @return:  java.util.List<me.chanjar.weixin.mp.bean.template.WxMpTemplateData>
-     * @Author:  cole.zhou
-     * @Date:  2022/8/26 上午 9:55
+     * @Description: 中午提醒数据
+     * @Param: []
+     * @return: java.util.List<me.chanjar.weixin.mp.bean.template.WxMpTemplateData>
+     * @Author: cole.zhou
+     * @Date: 2022/8/26 上午 9:55
      */
-    public static List<WxMpTemplateData> noonTemplateData(Friend friend){
+    public static List<WxMpTemplateData> noonTemplateData(Friend friend) {
         ArrayList<WxMpTemplateData> wxMpTemplateData = new ArrayList<>();
-        String  content =
-                friend.getFullName()+" 中午好呀!\n"
-                + "中午是我们能在一起的时间最少的时候 \n"
-                + "因为清晨能伴你醒来 \n"
-                + "晚上能陪你入睡 \n"
-                + "所以啊,我不在的时候你要记得吃饭 \n"
-                + "照顾好自己 \n"
-                + "这个中午也是爱你的中午! \n"
-                ;
+        String content =
+                friend.getFullName() + " 中午好呀!\n"
+                        + "中午是我们能在一起的时间最少的时候 \n"
+                        + "因为清晨能伴你醒来 \n"
+                        + "晚上能陪你入睡 \n"
+                        + "所以啊,我不在的时候你要记得吃饭 \n"
+                        + "照顾好自己 \n"
+                        + "这个中午也是爱你的中午! \n";
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("MSG").value(content).build());
 
 //        wxMpTemplateData.add(TemplateDataBuilder.builder().name("MSG2").value(content).build());
@@ -206,63 +207,62 @@ public class MessageFactory {
     }
 
     /**
-     * @Description:  下午提醒数据
-     * @Param:  []
-     * @return:  java.util.List<me.chanjar.weixin.mp.bean.template.WxMpTemplateData>
-     * @Author:  cole.zhou
-     * @Date:  2022/8/26 上午 9:55
+     * @Description: 下午提醒数据
+     * @Param: []
+     * @return: java.util.List<me.chanjar.weixin.mp.bean.template.WxMpTemplateData>
+     * @Author: cole.zhou
+     * @Date: 2022/8/26 上午 9:55
      */
-    public static List<WxMpTemplateData> afternoonTemplateData(Friend friend){
+    public static List<WxMpTemplateData> afternoonTemplateData(Friend friend) {
         ArrayList<WxMpTemplateData> wxMpTemplateData = new ArrayList<>();
-        String  content =
-                        friend.getFullName()+ " 下午好呀!\n"
+        String content =
+                friend.getFullName() + " 下午好呀!\n"
                         + " 喝水\n"
                         + " 活动\n"
                         + " 眺望\n"
                         + " 休息\n"
-                        + " 提醒4连...\n"
-                ;
-        wxMpTemplateData.add(TemplateDataBuilder.builder().name("MSG").value(content).build());
+                        + " 提醒4连...\n";
+        wxMpTemplateData.add(TemplateDataBuilder.builder().name("MSG1").value(content).build());
         return wxMpTemplateData;
 
     }
 
 
     /**
-     * @Description:  晚上提醒数据
-     * @Param:  []
-     * @return:  java.util.List<me.chanjar.weixin.mp.bean.template.WxMpTemplateData>
-     * @Author:  cole.zhou
-     * @Date:  2022/8/26 上午 9:55
+     * @Description: 晚上提醒数据
+     * @Param: []
+     * @return: java.util.List<me.chanjar.weixin.mp.bean.template.WxMpTemplateData>
+     * @Author: cole.zhou
+     * @Date: 2022/8/26 上午 9:55
      */
-    public static List<WxMpTemplateData> nightTemplateData(Friend friend){
+    public static List<WxMpTemplateData> nightTemplateData(Friend friend) {
 
         ArrayList<WxMpTemplateData> wxMpTemplateData = new ArrayList<>();
-        wxMpTemplateData.add(TemplateDataBuilder.builder().name("wenhouyu").value("晚上好呀," +friend.getFullName()).color("#F53F3F").build());
+        /*获取晚安心语*/
+        TianXingInnerData gethualihushao = Utils.gethualihushao("4");
+        wxMpTemplateData.add(TemplateDataBuilder.builder().name("wenhouyu").value("晚上好呀," + friend.getFullName()).color("#F53F3F").build());
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("msg1").value("此时此刻的你应该正在享受这美好的夜晚").color("#F77234").build());
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("msg2").value("此时此刻的星星像是在为我们布置一场浪漫的荧幕").color("#FF9A2E").build());
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("msg3").value("我多希望现在的我能够在你身边").color("#F9CC45").build());
-        wxMpTemplateData.add(TemplateDataBuilder.builder().name("msg4").value("和你躺在一起").color("#FADC19").build());
-        wxMpTemplateData.add(TemplateDataBuilder.builder().name("msg5").value("要知道,每一个夜晚").color("#9FDB1D").build());
-        wxMpTemplateData.add(TemplateDataBuilder.builder().name("msg6").value("都是月亮和星星相遇的时候").color("#4CD263").build());
-        wxMpTemplateData.add(TemplateDataBuilder.builder().name("msg7").value("就像我们,如此一样").color("#37D4CF").build());
-        wxMpTemplateData.add(TemplateDataBuilder.builder().name("msg8").value("今天已成过往,明天依旧晴朗").color("#57A9FB").build());
-        wxMpTemplateData.add(TemplateDataBuilder.builder().name("msg9").value("今日与明朝都是爱你的一整天").color("#4080FF").build());
-        wxMpTemplateData.add(TemplateDataBuilder.builder().name("msg10").value("早早入睡,保持好心情").color("#8D4EDA").build());
-        wxMpTemplateData.add(TemplateDataBuilder.builder().name("msg11").value("晚安,我的宝! ♥").color("#F5319D").build());
+        wxMpTemplateData.add(TemplateDataBuilder.builder().name("msg4").value("和你躺在一起,要知道,每一个夜晚").color("#FADC19").build());
+        wxMpTemplateData.add(TemplateDataBuilder.builder().name("msg5").value("都是月亮和星星相遇,").color("#4CD263").build());
+        wxMpTemplateData.add(TemplateDataBuilder.builder().name("msg6").value("今天已成过往,明天依旧晴朗").color("#57A9FB").build());
+        wxMpTemplateData.add(TemplateDataBuilder.builder().name("msg7").value("今日与明朝都是爱你的一整天").color("#4080FF").build());
+        wxMpTemplateData.add(TemplateDataBuilder.builder().name("msg8").value(gethualihushao.getContent()).color("#F77234").build());
+        wxMpTemplateData.add(TemplateDataBuilder.builder().name("msg9").value("爱你,我的宝! ♥").color("#F5319D").build());
         return wxMpTemplateData;
 
     }
 
 
     /**
-     * @Description:  自定义消息
-     * @Param:  [content]
-     * @return:  java.util.List<me.chanjar.weixin.mp.bean.template.WxMpTemplateData>
-     * @Author:  cole.zhou
-     * @Date:  2022/8/26 下午 2:01
+     * @Description: 自定义消息
+     * @Param: [content]
+     * @return: java.util.List<me.chanjar.weixin.mp.bean.template.WxMpTemplateData>
+     * @Author: cole.zhou
+     * @Date: 2022/8/26 下午 2:01
      */
-    public static List<WxMpTemplateData> defaultTemplateData(String content){
+    public static List<WxMpTemplateData> defaultTemplateData(String content) {
         ArrayList<WxMpTemplateData> wxMpTemplateData = new ArrayList<>();
         wxMpTemplateData.add(TemplateDataBuilder.builder().name("MSG").value(content).build());
         return wxMpTemplateData;
